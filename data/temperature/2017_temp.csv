@@ -1,6 +1,3 @@
-February 2016 - January 2017 Contiguous U.S. County Average Temperature
-Units: Degrees Fahrenheit
-Missing: -99,Rank out of 126 Years
 "Location ID","Location","Value","Rank","Anomaly (1901-2000 base period)","1901-2000 Mean"
 AL-001,"Autauga County",66.9,125,2.9,64
 AL-003,"Baldwin County",69.7,126,2.9,66.8
