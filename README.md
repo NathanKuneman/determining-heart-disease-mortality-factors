@@ -78,11 +78,7 @@ As you can see there appears to be some correlation between the two but this gra
 
 <img src="images/warm_cold_scatter.jpg"
      alt="Temperature's affect on heart disease mortality"
-     style="float: center; margin-right: 10px;" />
-
----
-
-The key things I took away from this graph were that the warm counties tended to have a larger range of values and that the difference in the two means was quite large.
+     style="float: center; margin-right:1.769354495768219e-130f values and that the difference in the two means was quite large.
 
 From these graphs I was able to see that temperature may be an important factor when in comes to heart disease mortality rates. Because of these findings I will use temperature in my hypothesis testing later. 
 
@@ -125,20 +121,102 @@ I am not the only one who found this interesting as there is currently a study u
 
 Because this outlier is so extreme, I've chosen to ignore this data point in my hypothesis testing.
 
+---
+
 ## **Hypothesis Testing**
+The results from the exploratory data analysis would lead one to believe that both temperature and income levels of each county will have an affect the rates of heart disease mortality within that county, however, in order to prove this we need to complete a hypothesis test on each feature. 
 
 ### **Temperature**
+Since the mean mortality rate in warmer counties is higher than that in cold counties I've decided to state my null and alternative hypothesis as listed below.
+
+---
+
+Where "P" is the probability of death from heart disease.
+
+Null Hypothesis = P<sub>warm counties</sub> <= P<sub>cold counties</sub>  
+
+Alternative Hypothesis = P<sub>warm counties</sub> > P<sub>cold counties</sub>  
+
+---
+
+For this test warm counties are defined by all counties there the temperature is above the mean temperature the opposite is true for cold counties
+
+We will set our Alpha value low at .02 since we have a fairly large data set.
+
+Now we will perform a T-test to get our P-value and determine if the true means of these populations are different. 
+
+### **Results:**
+
+|Year    |P-value  |
+|-------------------|-------------------------------------------------|
+| 2013    | 1.7693 * 10<sup>-130</sup> |
+| 2014            | 5.6231 * 10<sup>-131</sup>      |
+|    2015       |    1.7259 * 10<sup>-130</sup>   |
+| 2016         | 2.7035 * 10<sup>-136</sup>    |
+|    2017        |    2.8660 * 10<sup>-140</sup>   |
+|    2018        |    2.4765 * 10<sup>-135</sup>      |
+
+**These values are far below our alpha threshold therefore we can reject the null hypothesis.**
+
 
 
 ### **Income**
+In the exploratory data analysis it became clear that as a county had a higher income there was a significantly lower level of mortalities from heart disease. In order to test this we will divide the counties up based on if they fall above or below the mean income level. We will then test this with the null and alternative hypothesis listed below. 
+
+---
+
+Where "P" is the probability of death from heart disease.
+
+Null Hypothesis = P<sub>poor counties</sub> <= P<sub>wealthy counties</sub>  
+
+Alternative Hypothesis = P<sub>poor counties</sub> > P<sub>wealthy counties</sub>  
+
+---
+
+For this test we will set an alpha value of 0.02.
+
+Now we will perform a T-test to get our P-value and determine if the true means of these populations are different. 
+
+### **Results:**
+
+|Year    |P-value  |
+|-------------------|-------------------------------------------------|
+| 2013    | 0 |
+| 2014            | 0     |
+|    2015       |    0  |
+| 2016         | 0   |
+|    2017        |    0  |
+|    2018        |   0     |
+
+A P-value of 0 generally means that the number is so close to zero that the computer cannot store it properly and it gets rounded to 0.
+
+**Since these values are below the alph threshold we can reject the null hypothesis**
 
 
 
 ## **Conclusions**
+Since both null hypotheses were rejected, it is true that both temperature and income of a county have an effect on the heart disease mortality rate within that county. 
 
 ### **Usability**
-
-
+Knowing the factors that cause higher rates of heart disease mortalities is an important first step in understanding why these factors matter and what we can do about them. Simply spreading awareness could lead to residents of the higher risk counties to be more proactive about thier heart health. Also lawmakers in these counties could use this information to make better informed decisions when it comes to the health of thier constituents. 
 
 ### **Future Exploration**
+Now that we know that temperature and income level play a role in the amount of heart disease mortalities, the next big question is "why?". Looking at income first, there are many avenues that might be worth exploring. 
+
+* Do residents in lower income counties not have access to the same quality of healthcare as those in wealthier counties?
+
+* Is the food easily available in lower income counties not as healthy as food available in weathly counties? 
+
+Looking at temperature the next steps might not be as clear. The variations in temperature are not as distinct as the variations in income. 
+
+* Could it be that in warmer counties it is often too hot outside for residents to get excercise?
+
+* Is the heat actaully triggering heart disease events such as a heart attack?
+
+Lastly another interesting topic to dig into deeper would be the topic of Franklin Parish, Louisiana. It is so far outside of the distrubution of the other data points that there must be some other feature playing a role there. 
+
+* Is there an industrial or environmental hazard that is affecting heart health?
+
+* Is there a genetic defect that is prominent among residents of the county?
+
 
