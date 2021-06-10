@@ -1,4 +1,4 @@
-# Predicting Heart Disease Mortality
+# **Predicting Heart Disease Mortality**
 
 
 
@@ -6,18 +6,19 @@
      alt="Markdown Monster icon"
      style="float: center; margin-right: 10px;" />
 
-## Background
+## **Background**
 
-Heart disease mortality rates vary significatly across different counties and states within the United States. I set out to explore what could cause these differences by combining data provided by the government health data website, the US Census Bureau, and the National Oceanic and Atmospheric Administration (NOAA).
+Heart disease mortality rates vary significatly across different counties and states within the United States. I set out to explore what could cause these differences by combining data provided by the government health data website, the US Census Bureau, and the National Oceanic and Atmospheric Administration (NOAA). 
+
 
 ---
 
-## Dataset
+## **Dataset**
 The data includes values for each year from 2013-2018. During my exploratory data analysis I discovered that changes in time did not significantly change the outcomes of any of my hypothesis tests so I mainly focused on using data from a single year. 
 
 
 
-### Sources: 
+### **Sources:**
 
 Government Healthcare Data - 
 [Dataset](https://healthdata.gov/dataset/Heart-Disease-Mortality-Data-Among-US-Adults-35-by/pwn5-iqp5)
@@ -29,7 +30,7 @@ The National Oceanic and Atmospheric Administration (NOAA) -
 [Dataset](https://www.ncdc.noaa.gov/cag/county/mapping/110/pcp/201601/12/value)
 
 
-### Key Features:
+### **Key Features:**
 
 
 |Feature Name     |Data type |Source |Description                              |
@@ -41,7 +42,7 @@ The National Oceanic and Atmospheric Administration (NOAA) -
 |   Households!!Estimate!!Mean income (dollars)            | Float      | U.S. Census Data  | An Estimate of the mean household income for each county
 | Location | String      | NOAA | Name of the County
 | Location ID      | String      | NOAA | This is a unique number given to each county in the U.S. to identify it <sup>2</sup>
-| Value     | Float      | NOAA | The mean tempurature in the county for the given year
+| Value     | Float      | NOAA | The mean temperature in the county for the given year
 
 <sup>1</sup>This value is per 100,000 residents, spacially smoothed over 3 years, and age-adjusted. [Age-adjusted](https://en.wikipedia.org/wiki/Age_adjustment) is medical definition that attempts to adjust the value so that differences in the age of a population between counties will not skew the value.   
 
@@ -49,51 +50,82 @@ The National Oceanic and Atmospheric Administration (NOAA) -
 
 
 
-### Notes About the Data
-There were a total of 3,104 rows for each dataset while there are 3,143 counties in the U.S. if you do not include counties in Puerto Rico. This difference is because I chose to ignore counties that had missing values. These missing values mainly came from counties with not enough residents to accurately estimate the mortality rate per 100,000 residents. 
+### **Notes About the Data**
+* I want to reiterate the footnote<sup>1</sup> up above. Because this data has been age-adjusted we can assume that varying aged populations between counties will not affect the values. 
+
+* There were a total of 3,104 rows for each dataset while there are 3,143 counties in the U.S. if you do not include counties in Puerto Rico. This difference is because I chose to ignore counties that had missing values. These missing values mainly came from counties with not enough residents to accurately estimate the mortality rate per 100,000 residents. 
 
 ---
 
-## Exploratory Data Analysis
+## **Exploratory Data Analysis**
 Once I combined all of the data into a single dataframe I could then look to see if there were any significant features may be affecting the heart disease mortality rate for each county.
 
-### Exploration of Temperature feature
+### **Exploration of Temperature feature**
 
 Th first step in comparing the temperature data to the mortality rate was to normalize the data using a [min/max normalization](https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization)). I was then able to plot the two features on the same axis as shown below.
 
+---
 
+<img src="images/normalized_temp_death.jpg"
+     alt="Markdown Monster icon"
+     style="float: center; margin-right: 10px;" />
 
+---
 
-Our model will be using the following features, seperated into summary features of the user and time series features that use the specific day-to-day/week-to-week features. 
+As you can see there appears to be some correlation between the two but this graph makes it a little unclear how strong that correlation may be. Also note that the large jumps in the graph are caused by moving between states. This would lead me to believe that what state a county in is affecting the graph more than the temperature. In order to be able to directly compare the affect of temperature on each the heart disease mortalities of each county, I decided to break the counties up into two groups. I put counties who's temperature was above the mean temperature across counties into a data frame named "hot_counties" and then put the counties below the mean temperature in a data frame named "cold_counties". The scatter plot below shows the difference in the two data frames. 
 
-* **Summary and Demographic Features**
-    * User's age at the cutoff
-    * The maximium hold (loss) in a single day 
-    * User's Fixed-Odds to Live-Action Sports hold ratio
-* **Time Series Features**
-    * Weekly Hold
-    * Rolling Average of the Weekly Hold
-    * Weekly (Weighted) Bets
+---
 
-### Making the Frames
+<img src="images/warm_cold_scatter.jpg"
+     alt="Markdown Monster icon"
+     style="float: center; margin-right: 10px;" />
 
-Recall that the Responsible Gaming inteventions are only between November 2008 and November 2009. To create frames for a model to train and evaluate on, I split that period and the preceding six months with intervals of 3 months; the frame can sees the data from two years before the cutoff and attempts to predict if that subscriber had a Responsible Gaming intervention event in the next year. The frame is labelled positive if that's the case and negative otherwise.
+---
 
-![](images/frame_show.gif)
+The key things I took away from this graph were that the warm counties tended to have a larger range of values and that the difference in the two means was quite large.
 
-We outright discard the frame if an RG event happened _before_ the cutoff (such as the last frame in the slide above), as that's not particually representative of what the model's trying to accomplish.
+From these graphs I was able to see that temperature may be an important factor when in comes to heart disease mortality rates. Because of these findings I will use temperature in my hypothesis testing later. 
 
-### Sampling
+### **Exploration of Income Feature**
 
-The initial dataset was balanced between RG-flagged and non-RG users. But the positive and negative frames have become significantly unbalanced:
+The first step in exploring the income feature was to order the data by the mean household income feature. By doing this I could then plot the mortality rate with an x-axis of increasing income per county as shown below.
 
-* We've discarded over half of our RG set because of "Reopen" codes. 
-* All frames created from a non-RG user are going to be negative class, while frames from an RG user are going to be a mix of positive and negative class.
-* We're discarding a frame if it has an RG event in it, further cutting our positive frame.
+---
 
-Naively applying our framing process to all valid entries creates roughly 20000 negative frames and 4000 positive frames, which is rather unbalanced. I undersample the control users until I had a roughly 50:50 ratio of positive and negative samples, and I end up using about 300 control users to maintain this.
+<img src="images/mort_income.jpg"
+     alt="Markdown Monster icon"
+     style="float: center; margin-right: 10px;" />
 
-### Model Performance
+---
+
+The trend in this graph is clear that lower income counties have a significantly higher rate of heart disease mortality. In counties where the mean household income is above $80,000 there are very few data points that fall above the overall mean mortality rate while a majority of counties falling below a $50,000 mean household income were above the overall mean mortality rate. 
+
+To take this a step farther let's look at the means of the 100 richest, 100 middle, and the 100 poorest counties. We'll define the richest and poorest counties by the mean household income for this example.
+
+---
+
+<img src="images/poor_mid_rich.jpg"
+     alt="Markdown Monster icon"
+     style="float: center; margin-right: 10px;" />
+
+---
+
+This made it clear that mean household income was certainly a feature worth exploring more. **The difference between the mean of the 100 poorest counties and the 100 richest counties was 209.2 mortalities per 100,000. If these means are truely representitive of the entire population than we can estimate that people in rich counties are 44% less likely to die from heart disease than those in poor counties.** In order to see if this data is significant I will conduct a hypothesis test on these features.
+
+---
+
+### **The Curious Case of Franklin Parish, Louisiana** 
+<img src="images/franklin.gif"
+     alt="Markdown Monster icon"
+     style="float: center; margin-right: 10px;" />
+    
+While most of the health data tended to fall into a mostly normal distrubution, there was one county that clearly was an outlier. Franklin Parish is a mostly rural county in Louisiana where the heart disease mortality rate was 1071.6 per 100,000 residents. This is over double the country-wide mean of 361.9 and is 265.2 higher the next highest county, Caldwell Parish, which is also in Louisiana.
+
+I am not the only one who found this interesting as there is currently a study underway at LSU’s Pennington Biomedical Research Center which features Franklin Parish due to the county's high rate of heart disease mortalities. More information about the study can be found [here](https://www.pbrc.edu/news/media/2019/RURAL-Study-Announced-Why-do-Some-but-Not-All-Rural-Southerners-Live-longer-Healthier-Lives.aspx).
+
+Because this outlier is so extreme, I've chosen to ignore this data point in my hypothesis testing.
+
+## **Hypothesis Testing**
 
 I first created a training and holdout set of user IDs, applied my processing and framing seperately, then fit a Random Forest Model to the training set. I use a grid search for hyperparameter tuning, optimizing on the F1 score:
 
