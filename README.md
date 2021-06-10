@@ -8,7 +8,7 @@
 
 ## **Background**
 
-Heart disease mortality rates vary significatly across different counties and states within the United States. I set out to explore what could cause these differences by combining data provided by the government health data website, the US Census Bureau, and the National Oceanic and Atmospheric Administration (NOAA). 
+Heart disease mortality rates vary significantly across different counties and states within the United States. I set out to explore what could cause these differences by combining data provided by the government health data website, the US Census Bureau, and the National Oceanic and Atmospheric Administration (NOAA). 
 
 
 ---
@@ -75,10 +75,11 @@ Th first step in comparing the temperature data to the mortality rate was to nor
 As you can see there appears to be some correlation between the two but this graph makes it a little unclear how strong that correlation may be. Also note that the large jumps in the graph are caused by moving between states. This would lead me to believe that what state a county in is affecting the graph more than the temperature. In order to be able to directly compare the affect of temperature on each the heart disease mortalities of each county, I decided to break the counties up into two groups. I put counties who's temperature was above the mean temperature across counties into a data frame named "hot_counties" and then put the counties below the mean temperature in a data frame named "cold_counties". The scatter plot below shows the difference in the two data frames. 
 
 ---
-
 <img src="images/warm_cold_scatter.jpg"
      alt="Temperature's affect on heart disease mortality"
-     style="float: center; margin-right:1.769354495768219e-130f values and that the difference in the two means was quite large.
+     style="float: center; margin-right: 10px;" />
+
+
 
 From these graphs I was able to see that temperature may be an important factor when in comes to heart disease mortality rates. Because of these findings I will use temperature in my hypothesis testing later. 
 
@@ -141,7 +142,7 @@ Alternative Hypothesis = P<sub>warm counties</sub> > P<sub>cold counties</sub>
 
 For this test warm counties are defined by all counties there the temperature is above the mean temperature the opposite is true for cold counties
 
-We will set our Alpha value low at .02 since we have a fairly large data set.
+Normally I would choose an Alpha value of .05 but since we are performing 6 hypothesis tests I have to perform a [Bonferroni correction](https://en.wikipedia.org/wiki/Bonferroni_correction) which gives me an Alpha of **.00833**
 
 Now we will perform a T-test to get our P-value and determine if the true means of these populations are different. 
 
@@ -173,24 +174,22 @@ Alternative Hypothesis = P<sub>poor counties</sub> > P<sub>wealthy counties</sub
 
 ---
 
-For this test we will set an alpha value of 0.02.
+Normally I would choose an Alpha value of .05 but since we are performing 6 hypothesis tests I have to perform a [Bonferroni correction](https://en.wikipedia.org/wiki/Bonferroni_correction) which gives me an Alpha of **.00833**
 
 Now we will perform a T-test to get our P-value and determine if the true means of these populations are different. 
 
 ### **Results:**
 
-|Year    |P-value  |
-|-------------------|-------------------------------------------------|
-| 2013    | 0 |
-| 2014            | 0     |
-|    2015       |    0  |
-| 2016         | 0   |
-|    2017        |    0  |
-|    2018        |   0     |
+|Year    |P-value  | Poor County Mean| Wealthy County Mean| Cohen's d (Standardized Effect Size)|
+|---|---|---|---|---|
+| 2013    | 8.6040 * 10<sup>-135</sup> | 391.90| 318.90|  0.974614
+| 2014            | 8.3597 * 10<sup>-138</sup>    |392.97 | 317.78| 0.988062
+|    2015       |    1.8218 * 10<sup>-140</sup> |392.38| 315.86| 0.998198
+| 2016         | 1.3744 * 10<sup>-135</sup>  |390.92 |316.54| 0.977868
+|    2017        |    1.8674 * 10<sup>-133</sup> |387.48|314.95|  0.966705
+|    2018        |   2.6151 * 10<sup>-129</sup>  |384.52| 314.37| 0.947665
 
-A P-value of 0 generally means that the number is so close to zero that the computer cannot store it properly and it gets rounded to 0.
-
-**Since these values are below the alph threshold we can reject the null hypothesis**
+**These P-values are far below our alpha threshold therefore we can reject the null hypothesis.**
 
 
 
