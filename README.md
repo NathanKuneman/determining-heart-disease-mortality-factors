@@ -3,7 +3,7 @@
 
 
 <img src="images/heart_dis_by_state.jpg"
-     alt="Markdown Monster icon"
+     alt="Heart disease mortalities across states"
      style="float: center; margin-right: 10px;" />
 
 ## **Background**
@@ -67,7 +67,7 @@ Th first step in comparing the temperature data to the mortality rate was to nor
 ---
 
 <img src="images/normalized_temp_death.jpg"
-     alt="Markdown Monster icon"
+     alt="Normalized temperature data vs heart disease mortality rates across counties"
      style="float: center; margin-right: 10px;" />
 
 ---
@@ -77,7 +77,7 @@ As you can see there appears to be some correlation between the two but this gra
 ---
 
 <img src="images/warm_cold_scatter.jpg"
-     alt="Markdown Monster icon"
+     alt="Temperature's affect on heart disease mortality"
      style="float: center; margin-right: 10px;" />
 
 ---
@@ -93,19 +93,19 @@ The first step in exploring the income feature was to order the data by the mean
 ---
 
 <img src="images/mort_income.jpg"
-     alt="Markdown Monster icon"
+     alt="Heart disease mortality rates vs county wide income"
      style="float: center; margin-right: 10px;" />
 
 ---
 
 The trend in this graph is clear that lower income counties have a significantly higher rate of heart disease mortality. In counties where the mean household income is above $80,000 there are very few data points that fall above the overall mean mortality rate while a majority of counties falling below a $50,000 mean household income were above the overall mean mortality rate. 
 
-To take this a step farther let's look at the means of the 100 richest, 100 middle, and the 100 poorest counties. We'll define the richest and poorest counties by the mean household income for this example.
+To take this a step further let's look at the means of the 100 richest, 100 middle, and the 100 poorest counties. We'll define the richest and poorest counties by the mean household income for this example.
 
 ---
 
 <img src="images/poor_mid_rich.jpg"
-     alt="Markdown Monster icon"
+     alt="Heart Disease in the rich and poor counties 2013"
      style="float: center; margin-right: 10px;" />
 
 ---
@@ -116,7 +116,7 @@ This made it clear that mean household income was certainly a feature worth expl
 
 ### **The Curious Case of Franklin Parish, Louisiana** 
 <img src="images/franklin.gif"
-     alt="Markdown Monster icon"
+     alt="Franklin Parish Heart Disease"
      style="float: center; margin-right: 10px;" />
     
 While most of the health data tended to fall into a mostly normal distrubution, there was one county that clearly was an outlier. Franklin Parish is a mostly rural county in Louisiana where the heart disease mortality rate was 1071.6 per 100,000 residents. This is over double the country-wide mean of 361.9 and is 265.2 higher the next highest county, Caldwell Parish, which is also in Louisiana.
@@ -127,51 +127,18 @@ Because this outlier is so extreme, I've chosen to ignore this data point in my 
 
 ## **Hypothesis Testing**
 
-I first created a training and holdout set of user IDs, applied my processing and framing seperately, then fit a Random Forest Model to the training set. I use a grid search for hyperparameter tuning, optimizing on the F1 score:
+### **Temperature**
 
- | Parameter        | Optimal | Gridsearch Values |
- |------------------|--------:|------------------:|
-  | n_estimators    |     200 |        [100, 200] |
- | max_depth        |      None |            [None, 3, 5] |
- | min_samples_split |      2 |    [2, 4, 8] |
-  | min_samples_leaf |      5 |    [1, 5, 10, 20] |
- | bootstrap     |       True |            [False, True] |
 
-And performs the following metric scores on the validation set: 
+### **Income**
 
- | Metric        | Score |
-|------------------|--------:|
-| Recall | 0.66 
-| Precision | 0.71
-| F1 | 0.68 |
 
-## Conclusions
 
-### Usability
+## **Conclusions**
 
-How can we use this model for early interventions? That depends entirely on what planned early intervention we want to do. If we're simply sending the subscriber a non-compulsory email about gambling addiction and availiable resources, we can accept a much larger false positive rate than if we were taking a drastic action like a deposit limit or account block. We can construct an ROC curve from our model's predictions on the validation set, which allows us to fine-tune the trade off between the false positive rate and false negative rate by adjusting the acceptance threshold:
+### **Usability**
 
-![](images/roc_curve.png)
 
-This curve suggests that an interventionist could, for example, send information to about 60% of eventual RG-flagged users at the cost of unnecessarily sending the same information to 20% of non-flagged users.
 
-### Test Set Performance
+### **Future Exploration**
 
-On the final unseen data, the model (predictably) performed modestly worse but still seemed to generalize well.
-
- | Metric        | Score |
-|------------------|--------:|
-| Recall | 0.63 
-| Precision | 0.67
-| F1 | 0.65 |
-
-## Future Work
-
-* **Adding Appeals:** I discarded interventions that were appeals of earlier blocks, which turned out to be almost half of the positive data set. In many cases, the prior ban date can be pretty easily inferred by a sudden drop in activity:
-
-![](images/RG_reopenTrue.png)
-
-And extracting this information from even a portion of the appeals would substantially increase the sample size.
-
-* **Feature Engineering:** My feature engineering was rather limited; I'd like to try varying the size of the lookback window (there's no fundamental reason not to use the entire prior history!), try different granularities of the data, try different rolling windows and different metrics in the rolling windows.
-    * I'd particually like to try and featurize [loss chasing](https://www.gamblingtherapy.org/en/chasing-losses), which likely requires finer granularity than the week-wise I used in the model.
