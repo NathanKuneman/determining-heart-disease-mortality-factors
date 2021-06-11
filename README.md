@@ -2,7 +2,7 @@
 
 
 
-<img src="images/heart_dis_by_state.jpg"
+<img src="images/cover_photo.jpg"
      alt="Heart disease mortalities across states"
      style="float: center; margin-right: 10px;" />
 
@@ -150,12 +150,12 @@ Now we will perform a T-test to get our P-value and determine if the true means 
 
 |Year    |P-value  | Cold Counties Mean | Warm Counties Mean | Effect Size
 |---|---|---|---|---|
-| 2013    | 1.7693 * 10<sup>-130</sup> |326.24|397.00| 70.76 |
-| 2014            | 5.6231 * 10<sup>-131</sup>      |325.63| 397.92| 72.29|
-|    2015       |    1.7259 * 10<sup>-130</sup>   | 324.24| 397.05| 72.81
-| 2016         | 2.7035 * 10<sup>-136</sup>    |323.38| 396.74 | 73.37|
-|    2017        |    2.8660 * 10<sup>-140</sup>   | 320.87 | 393.89 | 73.02|
-|    2018        |    2.4765 * 10<sup>-135</sup>      | 320.17| 390.66 | 70.5|
+| 2013    | 6.90 * 10<sup>-132</sup> |326.24|395.57| 70.33 |
+| 2014            | 1.82 * 10<sup>-132</sup>      |325.63| 397.48| 71.84|
+|    2015       |    1.86 * 10<sup>-132</sup>   | 324.24| 396.55| 72.31
+| 2016         | 6.42 * 10<sup>-138</sup>    |323.38| 396.30 | 72.92|
+|    2017        |    3.13 * 10<sup>-141</sup>   | 320.87 | 392.52 | 72.65|
+|    2018        |    1.53 * 10<sup>-135</sup>      | 320.17| 390.39 | 70.23|
 
 **These values are far below our alpha threshold therefore we can reject the null hypothesis.**
 
@@ -182,12 +182,12 @@ Now we will perform a T-test to get our P-value and determine if the true means 
 
 |Year    |P-value  | Poor County Mean| Wealthy County Mean| Effect Size|
 |---|---|---|---|---|
-| 2013    | 8.6040 * 10<sup>-135</sup> | 391.90| 318.90|  73
-| 2014            | 8.3597 * 10<sup>-138</sup>    |392.97 | 317.78| 75.19
-|    2015       |    1.8218 * 10<sup>-140</sup> |392.38| 315.86| 76.52
-| 2016         | 1.3744 * 10<sup>-135</sup>  |390.92 |316.54| 74.38
-|    2017        |    1.8674 * 10<sup>-133</sup> |387.48|314.95|  72.53
-|    2018        |   2.6151 * 10<sup>-129</sup>  |384.52| 314.37| 70.15
+| 2013    | 1.44 * 10<sup>-136</sup> | 391.53| 318.91|  72.63
+| 2014            | 1.01 * 10<sup>-139</sup>    |392.58 | 317.78| 74.81
+|    2015       |    5.26 * 10<sup>-143</sup> |391.96| 315.86| 76.10
+| 2016         | 1.72 * 10<sup>-137</sup>  |390.53 |316.54| 73.99
+|    2017        |    1.43 * 10<sup>-134</sup> |387.16|314.95|  72.21
+|    2018        |   1.17 * 10<sup>-129</sup>  |384.29| 314.37| 69.92
 
 **These P-values are far below our alpha threshold therefore we can reject the null hypothesis.**
 
