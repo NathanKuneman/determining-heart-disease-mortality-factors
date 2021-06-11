@@ -1,4 +1,4 @@
-# **Predicting Heart Disease Mortality**
+# **Determining Heart Disease Mortality Factors**
 
 
 
@@ -132,11 +132,11 @@ Since the mean mortality rate in warmer counties is higher than that in cold cou
 
 ---
 
-Where "P" is the probability of death from heart disease.
+Where "M" is the mean rate of deaths from heart disease.
 
-Null Hypothesis = P<sub>warm counties</sub> <= P<sub>cold counties</sub>  
+Null Hypothesis = M<sub>warm counties</sub> = M<sub>cold counties</sub>  
 
-Alternative Hypothesis = P<sub>warm counties</sub> > P<sub>cold counties</sub>  
+Alternative Hypothesis = M<sub>warm counties</sub> > M<sub>cold counties</sub>  
 
 ---
 
@@ -148,14 +148,14 @@ Now we will perform a T-test to get our P-value and determine if the true means 
 
 ### **Results:**
 
-|Year    |P-value  |
-|-------------------|-------------------------------------------------|
-| 2013    | 1.7693 * 10<sup>-130</sup> |
-| 2014            | 5.6231 * 10<sup>-131</sup>      |
-|    2015       |    1.7259 * 10<sup>-130</sup>   |
-| 2016         | 2.7035 * 10<sup>-136</sup>    |
-|    2017        |    2.8660 * 10<sup>-140</sup>   |
-|    2018        |    2.4765 * 10<sup>-135</sup>      |
+|Year    |P-value  | Cold Counties Mean | Warm Counties Mean | Effect Size
+|---|---|---|---|---|
+| 2013    | 1.7693 * 10<sup>-130</sup> |326.24|397.00| 70.76 |
+| 2014            | 5.6231 * 10<sup>-131</sup>      |325.63| 397.92| 72.29|
+|    2015       |    1.7259 * 10<sup>-130</sup>   | 324.24| 397.05| 72.81
+| 2016         | 2.7035 * 10<sup>-136</sup>    |323.38| 396.74 | 73.37|
+|    2017        |    2.8660 * 10<sup>-140</sup>   | 320.87 | 393.89 | 73.02|
+|    2018        |    2.4765 * 10<sup>-135</sup>      | 320.17| 390.66 | 70.5|
 
 **These values are far below our alpha threshold therefore we can reject the null hypothesis.**
 
@@ -166,35 +166,35 @@ In the exploratory data analysis it became clear that as a county had a higher i
 
 ---
 
-Where "P" is the probability of death from heart disease.
+Where "M" is the mean rate of deaths from heart disease.
 
-Null Hypothesis = P<sub>poor counties</sub> <= P<sub>wealthy counties</sub>  
+Null Hypothesis = M<sub>poor counties</sub> = M<sub>wealthy counties</sub>  
 
-Alternative Hypothesis = P<sub>poor counties</sub> > P<sub>wealthy counties</sub>  
+Alternative Hypothesis = M<sub>poor counties</sub> != M<sub>wealthy counties</sub>  
 
 ---
 
-Normally I would choose an Alpha value of .05 but since we are performing 6 hypothesis tests I have to perform a [Bonferroni correction](https://en.wikipedia.org/wiki/Bonferroni_correction) which gives me an Alpha of **.00833**
+Again here we will use an Alpha of **.00833**
 
 Now we will perform a T-test to get our P-value and determine if the true means of these populations are different. 
 
 ### **Results:**
 
-|Year    |P-value  | Poor County Mean| Wealthy County Mean| Cohen's d (Standardized Effect Size)|
+|Year    |P-value  | Poor County Mean| Wealthy County Mean| Effect Size|
 |---|---|---|---|---|
-| 2013    | 8.6040 * 10<sup>-135</sup> | 391.90| 318.90|  0.974614
-| 2014            | 8.3597 * 10<sup>-138</sup>    |392.97 | 317.78| 0.988062
-|    2015       |    1.8218 * 10<sup>-140</sup> |392.38| 315.86| 0.998198
-| 2016         | 1.3744 * 10<sup>-135</sup>  |390.92 |316.54| 0.977868
-|    2017        |    1.8674 * 10<sup>-133</sup> |387.48|314.95|  0.966705
-|    2018        |   2.6151 * 10<sup>-129</sup>  |384.52| 314.37| 0.947665
+| 2013    | 8.6040 * 10<sup>-135</sup> | 391.90| 318.90|  73
+| 2014            | 8.3597 * 10<sup>-138</sup>    |392.97 | 317.78| 75.19
+|    2015       |    1.8218 * 10<sup>-140</sup> |392.38| 315.86| 76.52
+| 2016         | 1.3744 * 10<sup>-135</sup>  |390.92 |316.54| 74.38
+|    2017        |    1.8674 * 10<sup>-133</sup> |387.48|314.95|  72.53
+|    2018        |   2.6151 * 10<sup>-129</sup>  |384.52| 314.37| 70.15
 
 **These P-values are far below our alpha threshold therefore we can reject the null hypothesis.**
 
 
 
 ## **Conclusions**
-Since both null hypotheses were rejected, it is true that both temperature and income of a county have an effect on the heart disease mortality rate within that county. 
+Since both null hypotheses were rejected, we can conclude that both temperature and income of a county are statistically significant features when looking at heart disease mortality rate within that county. 
 
 ### **Usability**
 Knowing the factors that cause higher rates of heart disease mortalities is an important first step in understanding why these factors matter and what we can do about them. Simply spreading awareness could lead to residents of the higher risk counties to be more proactive about thier heart health. Also lawmakers in these counties could use this information to make better informed decisions when it comes to the health of thier constituents. 
